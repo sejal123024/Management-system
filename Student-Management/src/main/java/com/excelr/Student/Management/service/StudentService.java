@@ -1,0 +1,51 @@
+package com.excelr.Student.Management.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Service;
+
+import com.excelr.Student.Management.model.Student;
+import com.excelr.Student.Management.repository.StudentRepository;
+
+@Service
+public class StudentService
+{
+	
+	
+	@Autowired
+	StudentRepository studentRepository;
+	
+	public void savestudent(Student s1) {
+		 studentRepository.save(s1);
+		 
+	}
+
+	public List<Student> getAllStudents() {
+	
+		return studentRepository.findAll();
+	}
+
+	public Student getStudentByRno(int rno) {
+		
+		return studentRepository.findById(rno).get();
+	}
+
+	public void updateStudent(int rno, Student newValues) {
+		Student studFromDb=getStudentByRno(rno);
+		
+
+		//studFromDb.setRno(newValues.getRno());
+		studFromDb.setSname(newValues.getSname());
+		studFromDb.setPer(newValues.getPer());
+		
+		studentRepository.save(studFromDb);
+	}
+
+	public  void deleteStudent(int rno) {
+		
+		 studentRepository.deleteById(rno);
+	}
+} 
+
